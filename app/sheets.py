@@ -19,6 +19,10 @@ def _get_credentials() -> Credentials:
 
     if credentials_json:
         info = json.loads(credentials_json)
+
+        if isinstance(info, str):
+            info = json.loads(info)
+
         return Credentials.from_service_account_info(info, scopes=SCOPES)
 
     credentials_path = os.getenv("GOOGLE_CREDENTIALS_FILE", "credentials.json")
