@@ -12,7 +12,7 @@ TIMEZONE = os.getenv("TIMEZONE", "Europe/Kyiv")
 GOOGLE_SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME", "")
 GOOGLE_WORKSHEET_NAME = os.getenv("GOOGLE_WORKSHEET_NAME", "")
 
-ADMIN_NAMES = {"Попович", "Семеніг"}
+ADMIN_NAMES = {"Попович Андрій", "Семеніг Вадим"}
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
