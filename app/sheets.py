@@ -1,19 +1,16 @@
 from __future__ import annotations
-from app.config import GOOGLE_SHEET_ID, GOOGLE_WORKSHEET_NAME
+
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import gspread
 from google.oauth2.service_account import Credentials
 
-TIMEZONE = os.getenv("TIMEZONE", "Europe/Kyiv")
-GOOGLE_SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME", "")
-GOOGLE_WORKSHEET_NAME = os.getenv("GOOGLE_WORKSHEET_NAME", "")
+from app.config import GOOGLE_SHEET_ID, GOOGLE_WORKSHEET_NAME, TIMEZONE
 
 ADMIN_NAMES = {"Попович Андрій", "Семеніг Вадим"}
-
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 
@@ -33,14 +30,17 @@ def _get_client() -> gspread.Client:
     return gspread.authorize(creds)
 
 
-client = _get_client()
+def _get_worksheet():
+    if not GOOGLE_SHEET_ID:
+        raise ValueError("GOOGLE_SHEET_ID is not set")
 
-spreadsheet = client.open_by_key(GOOGLE_SHEET_ID)
+    client = _get_client()
+    spreadsheet = client.open_by_key(GOOGLE_SHEET_ID)
 
-if GOOGLE_WORKSHEET_NAME:
-    return spreadsheet.worksheet(GOOGLE_WORKSHEET_NAME)
+    if GOOGLE_WORKSHEET_NAME:
+        return spreadsheet.worksheet(GOOGLE_WORKSHEET_NAME)
 
-return spreadsheet.sheet1
+    return spreadsheet.sheet1
 
 
 def _find_day_column(header_row: list[str], day: int) -> int | None:
@@ -63,10 +63,6 @@ def get_schedule_for_date(target_date: datetime | None = None) -> dict | None:
     if len(values) < 3:
         return None
 
-    # Очікуємо:
-    # values[0] = дні тижня / верхній службовий рядок
-    # values[1] = числа місяця
-    # values[2:] = працівники
     days_row = values[1]
     day_col = _find_day_column(days_row, now.day)
 
@@ -118,12 +114,5 @@ def get_today_schedule() -> dict | None:
 
 def get_tomorrow_schedule() -> dict | None:
     tz = ZoneInfo(TIMEZONE)
-    tomorrow = datetime.now(tz).replace(
-        hour=0,
-        minute=0,
-        second=0,
-        microsecond=0,
-    )
-    from datetime import timedelta
-    tomorrow = tomorrow + timedelta(days=1)
+    tomorrow = datetime.now(tz) + timedelta(days=1)
     return get_schedule_for_date(tomorrow)
