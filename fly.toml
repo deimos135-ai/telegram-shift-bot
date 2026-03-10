@@ -1,16 +1,10 @@
 app = "telegram-shift-bot"
+primary_region = "waw"
 
 [build]
 
 [env]
-PORT = "8080"
+TIMEZONE = "Europe/Kyiv"
 
-[[services]]
-internal_port = 8080
-protocol = "tcp"
-
-[[services.ports]]
-port = 80
-
-[[services.ports]]
-port = 443
+[processes]
+app = "python -m app.main"
