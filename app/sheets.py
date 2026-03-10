@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 
 from app.config import GOOGLE_SHEET_ID, GOOGLE_WORKSHEET_NAME, TIMEZONE
 
-ADMIN_NAMES = {"Попович", "Семеніг"}
+ADMIN_NAMES = {"Попович Андрій", "Семеніг Вадим"}
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 
