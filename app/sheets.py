@@ -38,7 +38,7 @@ def _get_worksheet():
         raise ValueError("GOOGLE_SHEET_NAME is not set")
 
     client = _get_client()
-    spreadsheet = client.open(GOOGLE_SHEET_NAME)
+    spreadsheet = client.open(GOOGLE_SHEET_ID)
 
     if GOOGLE_WORKSHEET_NAME:
         return spreadsheet.worksheet(GOOGLE_WORKSHEET_NAME)
