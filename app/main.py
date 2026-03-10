@@ -1,40 +1,34 @@
 import asyncio
+import logging
 
 from aiogram import Bot, Dispatcher
-from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
-from aiohttp import web
 
 from app.config import BOT_TOKEN
 from app.handlers import router
 from app.scheduler import start_scheduler
 
+logging.basicConfig(level=logging.INFO)
+
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
-dp.include_router(router)
-
-
-async def on_startup():
-
-    start_scheduler(bot)
-
 
 async def main():
+    print("=== BOT MAIN STARTED ===")
+    print(f"BOT_TOKEN exists: {bool(BOT_TOKEN)}")
 
-    await on_startup()
+    dp.include_router(router)
+    print("=== ROUTER INCLUDED ===")
 
-    app = web.Application()
+    start_scheduler(bot)
+    print("=== SCHEDULER STARTED ===")
 
-    SimpleRequestHandler(
-        dispatcher=dp,
-        bot=bot
-    ).register(app, path="/webhook")
+    me = await bot.get_me()
+    print(f"=== BOT CONNECTED: @{me.username} ===")
 
-    setup_application(app, dp, bot=bot)
-
-    return app
+    print("=== START POLLING ===")
+    await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
-
-    web.run_app(main(), port=8080)
+    asyncio.run(main())
