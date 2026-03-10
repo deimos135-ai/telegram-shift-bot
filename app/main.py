@@ -14,19 +14,10 @@ dp = Dispatcher()
 
 
 async def main():
-    print("=== BOT MAIN STARTED ===")
-    print(f"BOT_TOKEN exists: {bool(BOT_TOKEN)}")
-
     dp.include_router(router)
-    print("=== ROUTER INCLUDED ===")
-
     start_scheduler(bot)
-    print("=== SCHEDULER STARTED ===")
 
-    me = await bot.get_me()
-    print(f"=== BOT CONNECTED: @{me.username} ===")
-
-    print("=== START POLLING ===")
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 
