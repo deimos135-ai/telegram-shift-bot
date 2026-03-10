@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 
 from app.config import GOOGLE_SHEET_ID, GOOGLE_WORKSHEET_NAME, TIMEZONE
 
-ADMIN_NAMES = {"Попович Андрій", "Семеніг Вадим"}
+ADMIN_NAMES = {"Попович", "Семеніг"}
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 
@@ -19,6 +19,8 @@ def _get_credentials() -> Credentials:
 
     if credentials_json:
         credentials_json = credentials_json.strip()
+        print("GOOGLE_CREDENTIALS_JSON starts with:", credentials_json[:60])
+
         info = json.loads(credentials_json)
 
         if not isinstance(info, dict):
