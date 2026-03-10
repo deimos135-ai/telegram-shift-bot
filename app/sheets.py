@@ -18,10 +18,11 @@ def _get_credentials() -> Credentials:
     credentials_json = os.getenv("GOOGLE_CREDENTIALS_JSON")
 
     if credentials_json:
+        credentials_json = credentials_json.strip()
         info = json.loads(credentials_json)
 
-        if isinstance(info, str):
-            info = json.loads(info)
+        if not isinstance(info, dict):
+            raise ValueError("GOOGLE_CREDENTIALS_JSON must be a JSON object")
 
         return Credentials.from_service_account_info(info, scopes=SCOPES)
 
