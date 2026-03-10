@@ -67,11 +67,22 @@ def get_schedule_for_date(target_date: datetime | None = None) -> dict | None:
     worksheet = _get_worksheet()
     values = worksheet.get_all_values()
 
+    print("DEBUG worksheet title:", worksheet.title)
+    print("DEBUG rows count:", len(values))
+
     if len(values) < 3:
+        print("DEBUG not enough rows")
         return None
 
+    for i, row in enumerate(values[:5]):
+        print(f"DEBUG row {i}: {row}")
+
     days_row = values[1]
+    print("DEBUG days_row:", days_row)
+
     day_col = _find_day_column(days_row, now.day)
+    print("DEBUG today day:", now.day)
+    print("DEBUG day_col:", day_col)
 
     if day_col is None:
         return None
