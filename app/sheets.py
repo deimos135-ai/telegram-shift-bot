@@ -33,17 +33,14 @@ def _get_client() -> gspread.Client:
     return gspread.authorize(creds)
 
 
-def _get_worksheet():
-    if not GOOGLE_SHEET_NAME:
-        raise ValueError("GOOGLE_SHEET_NAME is not set")
+client = _get_client()
 
-    client = _get_client()
-    spreadsheet = client.open(GOOGLE_SHEET_ID)
+spreadsheet = client.open_by_key(GOOGLE_SHEET_ID)
 
-    if GOOGLE_WORKSHEET_NAME:
-        return spreadsheet.worksheet(GOOGLE_WORKSHEET_NAME)
+if GOOGLE_WORKSHEET_NAME:
+    return spreadsheet.worksheet(GOOGLE_WORKSHEET_NAME)
 
-    return spreadsheet.sheet1
+return spreadsheet.sheet1
 
 
 def _find_day_column(header_row: list[str], day: int) -> int | None:
