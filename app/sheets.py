@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from app.config import GOOGLE_SHEET_ID, GOOGLE_WORKSHEET_NAME
 import json
 import os
 from datetime import datetime
