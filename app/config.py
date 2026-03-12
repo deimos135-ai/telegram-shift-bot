@@ -7,4 +7,4 @@ GOOGLE_SHEET_ID = os.getenv("GOOGLE_SHEET_ID")
 GOOGLE_WORKSHEET_NAME = os.getenv("GOOGLE_WORKSHEET_NAME")
 
 TIMEZONE = os.getenv("TIMEZONE", "Europe/Kyiv")
-SEND_TIME = os.getenv("SEND_TIME", "09:00")
+SEND_TIME = os.getenv("SEND_TIME", "07:55")
