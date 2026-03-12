@@ -9,3 +9,4 @@ SEND_TIME = "07:55"
 
 [processes]
 app = "python -m app.main"
+cron = "supercronic /app/crontab"
