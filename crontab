@@ -1,0 +1,2 @@
+TZ=Europe/Kyiv
+55 7 * * * python -m app.send_once >> /proc/1/fd/1 2>> /proc/1/fd/2
