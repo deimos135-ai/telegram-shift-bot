@@ -5,6 +5,7 @@ primary_region = "fra"
 
 [env]
 TIMEZONE = "Europe/Kyiv"
+SEND_TIME = "07:55"
 
 [processes]
 app = "python -m app.main"
