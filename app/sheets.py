@@ -63,8 +63,14 @@ def _get_worksheet_for_date(target_date: datetime):
     spreadsheet = client.open_by_key(GOOGLE_SHEET_ID)
 
     worksheet_name = f"{MONTH_NAMES_UA[target_date.month]} {target_date.year}"
-    return spreadsheet.worksheet(worksheet_name)
 
+    try:
+        return spreadsheet.worksheet(worksheet_name)
+    except Exception:
+        available = [ws.title for ws in spreadsheet.worksheets()]
+        raise RuntimeError(
+            f"Worksheet '{worksheet_name}' not found. Available worksheets: {available}"
+        )
 
 def _find_day_column(header_row: list[str], target_date: datetime) -> int | None:
     variants = {
