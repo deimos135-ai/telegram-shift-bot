@@ -16,7 +16,7 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 CALL_CENTER_OPERATORS = {
     "Козуб Юлія",
     "Писанка Руслана",
-    "Тищенко Яна",
+    "Андрушечко Ярослава",
     "Бессмертна Евеліна",
 }
 
